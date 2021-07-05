@@ -1,0 +1,65 @@
+[
+  {
+    "id": "lmp",
+    "name": "Lamp",
+    "icon": "https://cdn0.iconfinder.com/data/icons/office-and-business-29/85/19_kight_black-512.png",
+    "type": "Slider",
+    "sliderValue": 50
+  },
+  {
+    "id": "cff",
+    "name": "Coffee Maker",
+    "icon": "https://cdn.iconscout.com/icon/free/png-256/coffee-maker-2580235-2151474.png",
+    "type": "On / Off",
+    "currentState": false
+  },
+  {
+    "id": "psps",
+    "name": "PS4",
+    "icon": "https://cdn3.iconfinder.com/data/icons/electronics-121/64/ps-4-pro-512.png",
+    "type": "On / Off",
+    "currentState": false
+  },
+  {
+    "id": "blnd",
+    "name": "Blinds",
+    "icon": "https://static.thenounproject.com/png/3424675-200.png",
+    "type": "Slider",
+    "sliderValue": 50
+  },
+  {
+    "id": "rmb",
+    "name": "Roomba",
+    "icon": "https://static.thenounproject.com/png/220396-200.png",
+    "type": "On / Off",
+    "currentState": false
+  },
+  {
+    "id": "spkr",
+    "name": "Speaker",
+    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwxuvNz8k4IioHZNp6S-jYqF4oK6h16cRM2Q&usqp=CAU",
+    "type": "Slider",
+    "sliderValue": 0
+  },
+  {
+    "id": "drs",
+    "name": "Door",
+    "icon": "https://img.icons8.com/ios/452/door.png",
+    "type": "On / Off",
+    "currentState": false
+  },
+  {
+    "id": "ac",
+    "name": "AC",
+    "icon": "https://image.flaticon.com/icons/png/512/114/114735.png",
+    "type": "Slider",
+    "sliderValue": 0
+  },
+  {
+    "id": "tv",
+    "name": "TV",
+    "icon": "https://icon-library.com/images/icon-tv/icon-tv-0.jpg",
+    "type": "On / Off",
+    "currentState": false
+  }
+]
