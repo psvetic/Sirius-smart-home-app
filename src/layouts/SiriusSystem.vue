@@ -1,20 +1,22 @@
+<!-- Komponenta koja sadrži meni, prikazuje se kroz cijelu aplikaciju osim homepage-a -->
+<!-- Služi za navigiranje između kuća, prostorija, uređaja i statistike -->
 <template>
   <q-layout class="shadow-2 rounded-borders">
-    <q-header elevated>
-      <q-toolbar style="background-color: antiquewhite; color: #454444;font-family: monospace">
-        <q-btn
-          flat
-          dense
-          round
-          @click="drawer = !drawer"
-          icon="menu"
-          aria-label="Menu"
-        />
-        <q-toolbar-title class="font text-h4">
-          Sirius
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
+      <q-header elevated style="position: fixed">
+        <q-toolbar style="background-color: antiquewhite; color: #454444;font-family: monospace">
+          <q-btn
+            flat
+            dense
+            round
+            @click="drawer = !drawer"
+            icon="menu"
+            aria-label="Menu"
+          />
+          <q-toolbar-title class="font text-h4">
+            Sirius
+          </q-toolbar-title>
+        </q-toolbar>
+      </q-header>
     <q-drawer
       v-model="drawer"
       show-if-above
@@ -66,7 +68,7 @@
             <q-icon name="style" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>CHARTS</q-item-label>
+            <q-item-label>Statistics</q-item-label>
           </q-item-section>
         </q-item>
         <q-separator />
@@ -78,7 +80,7 @@
             <q-icon name="home" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Home</q-item-label>
+            <q-item-label>Home page</q-item-label>
           </q-item-section>
         </q-item>
         <q-separator />

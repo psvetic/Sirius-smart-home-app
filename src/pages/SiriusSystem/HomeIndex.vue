@@ -1,3 +1,5 @@
+<!-- Komponenta za prikaz virtualnih kuća -->
+<!-- Čita potrebne podatke iz baze te ih prikazuje korisniku na ekran -->
 <template>
   <div class="column">
 
@@ -12,14 +14,19 @@
       <q-btn @click="onNewHome()" label="Add new home" color="primary"/>
     </div>
 
-    <div class="q-pa-md row items-start q-gutter-md">
-      <q-card v-for="home in homes" :key="home.id" v-ripple class="cursor-pointer q-hoverable"
-      clickable @click="GetHome()" inline style="width: 350px; height: 370px">
-        <span class="q-focus-helper"></span>
-        <img alt="Picture of a house." :src="home.icon" width='350' height='250'>
+    <!-- v-for označava da je za svaku kuću iz baze podataka potrebno generirati zaseban q-card sa svim navedenim podatcima o kući -->
+    <div class="center-content q-pa-md row items-start q-gutter-md">
+      <q-card v-for="home in homes" :key="home.id" inline style="width: 350px; height: 370px">
+        <div v-ripple class="cursor-pointer q-hoverable" clickable @click="GetHome(home)">
+          <img alt="Picture of a house." :src="home.icon" width='350' height='250'>
+          <span class="q-focus-helper"></span>
+        </div>
         <q-card-section>
           <div class="row justify-between">
-            <div><p class="text-bold text-h5">{{ home.name }}</p></div>
+            <div v-ripple class="cursor-pointer q-hoverable" clickable @click="GetHome(home)">
+              <p class="text-bold text-h5">{{ home.name }}</p>
+              <span class="q-focus-helper"></span>
+            </div>
             <div>
               <q-btn @click="onUpdateRow(home)" round size="sm" icon="edit" style="margin: 5px" />
               <q-btn @click="onDeleteRow(home)" round size="sm" icon="delete" />
@@ -42,13 +49,6 @@
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <q-input
-            ref="id"
-            label="ID"
-            v-model="home.id"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'ID is required.']"
-          />
           <q-input
             ref="Name"
             label="Name"
@@ -106,7 +106,7 @@ export default {
       home: null,
       homeTemplate: {
         UIDHome: null,
-        id: null,
+        id: this.makeID(5),
         createdAt: this.getDate(),
         name: null,
         address: null,
@@ -179,15 +179,24 @@ export default {
       this.timestamp = date
       return this.timestamp
     },
-    GetHome () {
-      console.log('hi again')
+    GetHome (house) {
+      this.$router.push({ path: 'rooms', query: { selectedHouse: house.name } })
+    },
+    makeID (length) {
+      let result = ''
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      const charactersLength = characters.length
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength))
+      }
+      return result
     },
     onNewHome () {
       this.home = JSON.parse(JSON.stringify(this.homeTemplate))
       this.openHomeDialog = true
     },
     onOKClick () {
-      if (!this.$refs.id.hasError) {
+      if (this.$refs.Name.hasValue) {
         const collectionRef = this.$db.collection('homes')
         if (this.home.UIDHome === null) {
           collectionRef.add(this.home)
@@ -259,5 +268,9 @@ export default {
 </script>
 
 <style scoped>
-
+@media only screen and (max-width: 900px) {
+  .center-content {
+    justify-content: center;
+  }
+}
 </style>

@@ -12,13 +12,7 @@ const routes = [
   },
   {
     path: '/Login',
-    component: () => import('layouts/Login.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('pages/Login/LoginIndex.vue')
-      }
-    ]
+    component: () => import('pages/Login/LoginIndex.vue')
   },
   {
     path: '/Administration',
@@ -43,7 +37,7 @@ const routes = [
       {
         path: '/charts',
         meta: { auth: true },
-        component: () => import('pages/SiriusSystem/MeasureIndex.vue')
+        component: () => import('pages/SiriusSystem/ChartIndex.vue')
       }
     ]
   },

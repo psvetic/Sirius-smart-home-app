@@ -1,65 +1,101 @@
 [
   {
-    "id": "lmp",
+    "UIDDevice": null,
+    "id": "1",
     "name": "Lamp",
     "icon": "https://cdn0.iconfinder.com/data/icons/office-and-business-29/85/19_kight_black-512.png",
     "type": "Slider",
-    "sliderValue": 50
+    "sliderValue": 50,
+    "currentState": false,
+    "lastChange": "",
+    "numberOfChanges": 0
   },
   {
-    "id": "cff",
+    "UIDDevice": null,
+    "id": "2",
     "name": "Coffee Maker",
     "icon": "https://cdn.iconscout.com/icon/free/png-256/coffee-maker-2580235-2151474.png",
     "type": "On / Off",
-    "currentState": false
+    "currentState": false,
+    "sliderValue": 0,
+    "lastChange": "",
+    "numberOfChanges": 0
   },
   {
-    "id": "psps",
+    "UIDDevice": null,
+    "id": "3",
     "name": "PS4",
     "icon": "https://cdn3.iconfinder.com/data/icons/electronics-121/64/ps-4-pro-512.png",
     "type": "On / Off",
-    "currentState": false
+    "currentState": false,
+    "sliderValue": 0,
+    "lastChange": "",
+    "numberOfChanges": 0
   },
   {
-    "id": "blnd",
+    "UIDDevice": null,
+    "id": "4",
     "name": "Blinds",
     "icon": "https://static.thenounproject.com/png/3424675-200.png",
     "type": "Slider",
-    "sliderValue": 50
+    "sliderValue": 50,
+    "currentState": false,
+    "lastChange": "",
+    "numberOfChanges": 0
   },
   {
-    "id": "rmb",
+    "UIDDevice": null,
+    "id": "5",
     "name": "Roomba",
     "icon": "https://static.thenounproject.com/png/220396-200.png",
     "type": "On / Off",
-    "currentState": false
+    "currentState": false,
+    "sliderValue": 0,
+    "lastChange": "",
+    "numberOfChanges": 0
   },
   {
-    "id": "spkr",
+    "UIDDevice": null,
+    "id": "6",
     "name": "Speaker",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwxuvNz8k4IioHZNp6S-jYqF4oK6h16cRM2Q&usqp=CAU",
     "type": "Slider",
-    "sliderValue": 0
+    "sliderValue": 0,
+    "currentState": false,
+    "lastChange": "",
+    "numberOfChanges": 0
   },
   {
-    "id": "drs",
+    "UIDDevice": null,
+    "id": "7",
     "name": "Door",
     "icon": "https://img.icons8.com/ios/452/door.png",
     "type": "On / Off",
-    "currentState": false
+    "currentState": false,
+    "sliderValue": 0,
+    "lastChange": "",
+    "numberOfChanges": 0
   },
   {
-    "id": "ac",
+    "UIDDevice": null,
+    "id": "8",
     "name": "AC",
     "icon": "https://image.flaticon.com/icons/png/512/114/114735.png",
     "type": "Slider",
-    "sliderValue": 0
+    "sliderValue": 0,
+    "currentState": false,
+    "lastChange": "",
+    "numberOfChanges": 0
   },
   {
-    "id": "tv",
+    "UIDDevice": null,
+    "id": "9",
     "name": "TV",
     "icon": "https://icon-library.com/images/icon-tv/icon-tv-0.jpg",
     "type": "On / Off",
-    "currentState": false
+    "currentState": false,
+    "sliderValue": 0,
+    "lastChange": "",
+    "numberOfChanges": 0
   }
 ]

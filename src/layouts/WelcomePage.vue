@@ -1,10 +1,14 @@
+<style scoped>
+
+</style>
+
 <template>
   <q-layout>
     <q-header elevated>
       <q-toolbar style="background-color: antiquewhite; color: #454444;font-family: monospace">
         <q-img src="./../../public/logo.jpg" width="80px" />
         <q-toolbar-title>
-          Sirius Smart Home System
+          Sirius
         </q-toolbar-title>
         <q-btn
           flat
@@ -30,7 +34,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

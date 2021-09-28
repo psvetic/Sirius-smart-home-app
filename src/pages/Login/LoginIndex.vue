@@ -1,20 +1,17 @@
-<style>
-body {
-  background-color: #000000;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg fill-opacity='0.72'%3E%3Cpolygon fill='%23071a02' points='1600 160 0 460 0 350 1600 50'/%3E%3Cpolygon fill='%230e3403' points='1600 260 0 560 0 450 1600 150'/%3E%3Cpolygon fill='%23154f05' points='1600 360 0 660 0 550 1600 250'/%3E%3Cpolygon fill='%231c6906' points='1600 460 0 760 0 650 1600 350'/%3E%3Cpolygon fill='%23238308' points='1600 800 0 800 0 750 1600 450'/%3E%3C/g%3E%3C/svg%3E");
-  background-attachment: fixed;
-  background-size: cover;
-}
+<!-- Komponenta za login korisnika -->
+<!-- Sastoji se od forme za email i password, te Firebase funkcije za autentifikaciju -->
+<style scoped>
 
 </style>
 
 <template>
   <div class="q-pa-lg row justify-center">
-    <div class="col" style="max-width: 400px">
+    <div class="col" style="max-width: 400px;margin-top: 60px;">
       <q-form @submit="onLogin">
         <q-card>
-          <q-card-section>
-            <div class="text-h6">Login</div>
+          <q-card-section style="text-align: center">
+            <img src="./../../../public/logo.png" width="100">
+            <div class="text-h6">Sirius Login</div>
           </q-card-section>
           <q-card-section>
             <div class="q-gutter-md">
@@ -49,7 +46,8 @@ body {
             </div>
           </q-card-section>
           <q-card-actions align="center">
-            <q-btn :loading="loading1" size="15px" label="Log In" type="submit" />
+            <q-btn :loading="loading1" size="15px" label="Log In" type="submit"
+                   style="background-color: #3bae3bd6;color: white;padding: 0 15px; margin-bottom: 10px"/>
           </q-card-actions>
         </q-card>
       </q-form>
@@ -71,14 +69,14 @@ export default {
   },
   mounted: function () {
     if (this.$auth.currentUser) {
-      this.$router.push('/Administration')
+      this.$router.push('/homes')
     }
   },
   methods: {
     onLogin () {
       this.$auth.signInWithEmailAndPassword(this.email, this.password)
         .then(response => {
-          this.$router.push('/Administration')
+          this.$router.push('/homes')
         })
         .catch(error => {
           console.log(error)

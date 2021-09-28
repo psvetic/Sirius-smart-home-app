@@ -1,3 +1,6 @@
+<!-- Komponenta za prikaz virtualnih prostojija -->
+<!-- Čita potrebne podatke iz baze te ih prikazuje korisniku na ekran, radi vrlo slično kao HomeIndex.vue komponenta -->
+<!-- Dodatno ima funkciju za filtriranje prostorija po virtualnim kućama - linije 17-27 -->
 <template>
   <div class="column">
 
@@ -5,21 +8,22 @@
       <q-breadcrumbs>
         <q-breadcrumbs-el icon="home" to="/" />
         <q-breadcrumbs-el label="Homes" icon="apartment" to="/homes" />
-        <q-breadcrumbs-el label="Rooms" icon="chair" to="/rooms" /> <!--to="/homes/rooms"-->
+        <q-breadcrumbs-el label="Rooms" icon="chair"/>
       </q-breadcrumbs>
     </div>
 
     <div class="q-pa-md row items-start q-gutter-md items-center">
       <div>
         <q-select
+          clearable
           style="width: 200px"
           outlined
-          v-model="roomTemplate.homeID"
+          v-model="select"
           option-value="id"
           option-label="name"
           :options=homes
           label="Filter by the house"
-          @input="findSelectedHome()"
+          @input="findSelectedHouse()"
         />
       </div>
       <div>
@@ -27,65 +31,51 @@
       </div>
     </div>
 
-    <div class="q-pa-md row items-start q-gutter-md">
-      <q-card
-        v-for="currentRoom in filteredRooms"
-        :key="currentRoom.id"
-        v-ripple
-        class="cursor-pointer q-hoverable"
-        clickable inline style="width: 300px; height: 320px"
-      >
-        <span class="q-focus-helper"></span>
-        <div class="icon_placeholder" style="width: 150px; height: 200px">
-          <img alt="Icon of a room." :src="currentRoom.icon">
+    <div class="center-content q-pa-md row items-start q-gutter-md">
+      <q-card v-for="currentRoom in filteredRooms" :key="currentRoom.id" inline style="width: 300px; height: 320px">
+        <div v-ripple class="cursor-pointer q-hoverable icon_placeholder" clickable @click="GetRoom(currentRoom)" style="height: 206px">
+          <img alt="Icon of a room." :src="currentRoom.icon" width='150'>
+          <span class="q-focus-helper"></span>
         </div>
         <q-card-section>
           <div class="row justify-between">
-            <div><p class="text-bold text-h5">{{ currentRoom.name }}</p></div>
+            <div>
+              <p class="text-bold text-h5">{{ currentRoom.name }}</p>
+            </div>
             <div>
               <q-btn @click="onUpdateRow(currentRoom)" round size="sm" icon="edit" style="margin: 5px" />
               <q-btn @click="onDeleteRow(currentRoom)" round size="sm" icon="delete" />
             </div>
           </div>
           <div>
-            <p>Home: {{ currentRoom.homeID.name }}</p>
+            <p>{{ currentRoom.homeID.name }}</p>
           </div>
         </q-card-section>
       </q-card>
 
     </div>
 
-    <!--- DIALOG for adding new room -->
+    <!--- dialog for adding new room -->
     <q-dialog
       v-if="openRoomDialog"
       v-model="openRoomDialog"
     >
       <q-card class="q-dialog-plugin">
         <q-card-section>
-          <div class="text-h6">Room</div>
+          <div class="text-h6">Room info</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <q-input
-            outlined
-            ref="id"
-            label="ID"
-            v-model="room.id"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'ID is required.']"
-          />
           <q-select
-            outlined
             ref="homeID"
             v-model="room.homeID"
             option-value="id"
             option-label="name"
             :options=homes
-            label="Select a home where this room belongs."
-            :rules="[ val => val && val != null || 'Home is required.']"
+            label="Select a house where this room belongs."
+            :rules="[ val => val && val != null || 'House is required.']"
           />
           <q-input
-            outlined
             ref="Name"
             label="Name of the room"
             v-model="room.name"
@@ -93,7 +83,6 @@
             :rules="[ val => val && val.length > 0 || 'Name is required.']"
           />
           <q-input
-            outlined
             ref="Icon"
             label="Icon url"
             v-model="room.icon"
@@ -130,10 +119,10 @@ export default {
       filteredRooms: [],
       homes: [],
       room: null,
-      select: null,
+      select: this.$route.query.selectedHouse,
       roomTemplate: {
         UIDRoom: null,
-        id: null,
+        id: this.makeID(5),
         homeID: null,
         createdAt: this.getDate(),
         name: null,
@@ -166,7 +155,7 @@ export default {
           label: 'Icon',
           align: 'left',
           field: 'icon',
-          sortable: true
+          sortable: false
         },
         {
           name: 'actions',
@@ -184,12 +173,17 @@ export default {
     await collectionRef.get()
       .then((rows) => {
         rows.forEach((row) => {
+          // read each room from database, then save it in "rooms" array
           this.rooms.push(row.data())
-          this.filteredRooms = this.rooms.slice(0)
+          // if current room has "homeID.name" same as url query, display it on load
+          if (row.data().homeID.name === this.$route.query.selectedHouse || this.$route.query.selectedHouse == null) {
+            this.filteredRooms.push(row.data())
+          }
         })
-        console.log(this.rooms)
+        // filtered rooms are always displayed to user
+        console.log(this.filteredRooms)
       })
-    this.$db.collection('homes').get()
+    await this.$db.collection('homes').get()
       .then((rows) => {
         rows.forEach((row) => {
           this.homes.push(row.data())
@@ -207,24 +201,39 @@ export default {
       this.timestamp = date
       return this.timestamp
     },
-    findSelectedHome () {
-      this.filteredRooms = []
-      this.rooms.forEach(room => {
-        if (room.homeID.name === this.roomTemplate.homeID.name) {
-          this.filteredRooms.push(room)
-        }
-      })
+    GetRoom (room) {
+      console.log('hi again', room)
+      this.$router.push({ path: 'devices', query: { selectedHouse: room.homeID.name } })
     },
-    selectOption (key) {
-      this.filteredRooms = []
-      this.filteredRooms.push(this.selectedHome)
+    findSelectedHouse () {
+      // clearable option in q-select sets "this.select" to null, so all rooms should be displayed
+      // otherwise, filtered rooms are ones in the selected home
+      if (this.select === null) {
+        this.filteredRooms = this.rooms
+      } else {
+        this.filteredRooms = []
+        this.rooms.forEach(room => {
+          if (room.homeID.id === this.select.id) {
+            this.filteredRooms.push(room)
+          }
+        })
+      }
+    },
+    makeID (length) {
+      let result = ''
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      const charactersLength = characters.length
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength))
+      }
+      return result
     },
     onNewRoom () {
       this.room = JSON.parse(JSON.stringify(this.roomTemplate))
       this.openRoomDialog = true
     },
     onOKClick () {
-      if (!this.$refs.id.hasError) {
+      if (this.$refs.Name.hasValue && this.$refs.homeID.hasValue) {
         const collectionRef = this.$db.collection('rooms')
         if (this.room.UIDRoom === null) {
           collectionRef.add(this.room)
@@ -297,7 +306,6 @@ export default {
 </script>
 
 <style scoped>
-
 .icon_placeholder {
   width: 150px;
   height: auto;
@@ -306,6 +314,11 @@ export default {
 }
 img {
   width: 100%;
+}
+@media only screen and (max-width: 900px) {
+  .center-content {
+    justify-content: center;
+  }
 }
 
 </style>
